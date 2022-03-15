@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import { db } from '../config/firebase'
+import { AiOutlineHeart, AiOutlineShareAlt } from 'react-icons/ai'
+import { IoChatboxOutline } from "react-icons/io5"
 import firebase from 'firebase'
 
 const Post = ({ username, user, caption, imageUrl, postId }) => {
@@ -49,7 +51,14 @@ const Post = ({ username, user, caption, imageUrl, postId }) => {
                 src={imageUrl}
                 alt="postImage"
             />
-            <div className="font-normal px-2 pb-3 space-x-2"><strong>{username}</strong><span>{caption}</span></div>
+            <div className="font-normal px-2 pb-3 space-x-2">
+                <div className="flex space-x-2 text-2xl my-2" >
+                    <AiOutlineHeart />
+                    <IoChatboxOutline />
+                    <AiOutlineShareAlt />
+                </div>
+                <strong>{username}</strong><span>{caption}</span>
+            </div>
 
             {comments.map((comment, i) => (
                 <div className="px-4 space-x-2">

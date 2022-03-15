@@ -46,7 +46,7 @@ const ImageUpload = ({ username }) => {
         )
     }
     return (
-        <div className="flex flex-col w-8/12 mr-auto ml-auto my-2">
+        <div className="flex flex-col lg:w-[650px] w-full mr-auto ml-auto my-2">
             <progress
                 className="w-full h-1.5 rounded-lg"
                 value={progress}
