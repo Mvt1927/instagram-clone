@@ -145,20 +145,22 @@ const Header = () => {
                 </div>
             </Modal>
 
-            <div className="bg-white py-3 object-contain flex justify-between" style={{ border: "1px solid lightgray" }}>
-                <img
-                    className="object-contain"
-                    src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                    alt="Logo"
-                />
-                {user ? (
-                    <Button onClick={() => auth.signOut()}>Logout</Button>
-                ) : (
-                    <div className="">
-                        <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-                        <Button onClick={() => setOpen(true)}>Sign Up</Button>
-                    </div>
-                )}
+            <div className="bg-white py-3 object-contain flex justify-center" style={{ border: "1px solid lightgray" }}>
+                <div className="lg:w-[650px] w-full flex justify-between">
+                    <img
+                        className="object-contain"
+                        src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                        alt="Logo"
+                    />
+                    {user ? (
+                        <Button onClick={() => auth.signOut()}>Logout</Button>
+                    ) : (
+                        <div className="">
+                            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+                            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )
