@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
-import { db } from './firebase'
+import { db } from '../config/firebase'
 import firebase from 'firebase'
 
 const Post = ({ username, user, caption, imageUrl, postId }) => {

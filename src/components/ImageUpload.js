@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core'
 import React, { useState } from 'react'
-import { db, storage } from './firebase'
+import { db, storage } from '../config/firebase'
 import firebase from 'firebase/app'
 
 const ImageUpload = ({ username }) => {
@@ -48,7 +48,7 @@ const ImageUpload = ({ username }) => {
     return (
         <div className="flex flex-col w-8/12 mr-auto ml-auto my-2">
             <progress
-                className="w-full"
+                className="w-full h-1.5 rounded-lg"
                 value={progress}
                 max="100"
             />
