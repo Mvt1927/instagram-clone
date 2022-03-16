@@ -153,11 +153,11 @@ const Header = () => {
                         alt="Logo"
                     />
                     {user ? (
-                        <Button onClick={() => auth.signOut()}>Logout</Button>
+                        <Button onClick={() => auth.signOut()}>Đăng xuất</Button>
                     ) : (
                         <div className="">
-                            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-                            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+                            <Button onClick={() => setOpenSignIn(true)}>Đăng nhập</Button>
+                            <Button onClick={() => setOpen(true)}>Đăng ký</Button>
                         </div>
                     )}
                 </div>

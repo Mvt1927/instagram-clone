@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import { db } from '../config/firebase'
+import PostDetail from './PostDetail'
+import Comment from './Comment'
 import { AiOutlineHeart, AiOutlineShareAlt } from 'react-icons/ai'
 import { IoChatboxOutline } from "react-icons/io5"
-import firebase from 'firebase'
+import { BiBookmark } from 'react-icons/bi'
+import { FiMoreHorizontal } from 'react-icons/fi'
+import { Modal } from '@material-ui/core'
+
 
 const Post = ({ username, user, caption, imageUrl, postId }) => {
     const [comments, setComments] = useState([])
-    const [comment, setComment] = useState('')
+    const [like, setLike] = useState(12500)
+    const [sumComment, setSumComment] = useState(30)
+    const [open, setOpen] = useState(false)
+
+    function numberWithCommas(like) {
+        return like.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     useEffect(() => {
         let unSubscribe;
         if (postId) {
@@ -25,65 +37,81 @@ const Post = ({ username, user, caption, imageUrl, postId }) => {
         }
     }, [postId])
 
-    const handlePost = (e) => {
-        e.preventDefault()
-
-        db.collection('posts').doc(postId).collection('comments').add({
-            text: comment,
-            username: user.displayName,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        setComment('')
-    }
-
     return (
         <div className="lg:w-[650px] w-full  bg-white border border-gray-200 mb-3">
-            <div className="flex items-center px-2 py-1">
-                <Avatar
-                    className="mr-2 object-cover"
-                    alt={username}
-                    src="/static/images/avatar/1.jpg"
-                />
-                <h3>{username}</h3>
+            <div className="flex items-center py-2 px-3.5 justify-between">
+                <div className="flex items-center">
+                    <Avatar
+                        className="mr-2 object-cover"
+                        alt={username}
+                        src="/static/images/avatar/1.jpg"
+                    />
+                    <strong>{username}</strong>
+                </div>
+                <div className="text-xl">
+                    <FiMoreHorizontal />
+                </div>
             </div>
             <img
                 className="w-full object-contain border-y border-gray-200"
                 src={imageUrl}
                 alt="postImage"
             />
-            <div className="font-normal px-2 pb-3 space-x-2">
-                <div className="flex space-x-2 text-2xl my-2" >
-                    <AiOutlineHeart />
-                    <IoChatboxOutline />
-                    <AiOutlineShareAlt />
+            <div className="p-3.5 border-b">
+                <div className="flex justify-between mb-2">
+                    <div className="flex space-x-2 text-2xl" >
+                        <AiOutlineHeart />
+                        <IoChatboxOutline />
+                        <AiOutlineShareAlt />
+                    </div>
+                    <div className="text-2xl">
+                        <BiBookmark />
+                    </div>
                 </div>
-                <strong>{username}</strong><span>{caption}</span>
+                <div className="font-normal">
+                    <strong>{numberWithCommas(like)} lượt thích</strong>
+                </div>
+                <div className="font-normal space-x-2">
+                    <strong>{username}</strong><span>{caption}</span>
+                </div>
+                <button
+                    className='text-gray-500 font-normal'
+                    onClick={() => setOpen(true)}
+                >
+                    Xem tất cả {sumComment} bình luận
+                </button>
+
+                <Modal
+                    open={open}
+                    onClose={() => setOpen(false)}
+                >
+                    <PostDetail
+                        imageUrl={imageUrl}
+                        username={username}
+                        caption={caption}
+                        like={like}
+                        user={user}
+                        postId={postId}
+                        comments={comments}
+                    />
+                </Modal>
+                {comments.map((comment, i) => {
+                    if (i < 2) {
+                        return (
+                            <div className="space-x-2" key={i}>
+                                <strong>{comment.username}</strong>
+                                <span> {comment.text}</span>
+                            </div>
+                        )
+                    }
+                })}
             </div>
 
-            {comments.map((comment, i) => (
-                <div className="px-4 space-x-2">
-                    <strong>{comment.username}</strong>
-                    <span> {comment.text}</span>
-                </div>
-            ))}
+            <Comment
+                postId={postId}
+                user={user}
+            />
 
-            <form className="flex mt-2 border-t" >
-                <input
-                    className="flex-1 border-none p-2 outline-none"
-                    type="text"
-                    placeholder="Add a comment..."
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-                <button
-                    className="px-2 cursor-pointer"
-                    disabled={!comment}
-                    type="submit"
-                    onClick={handlePost}
-                >
-                    Post
-                </button>
-            </form>
         </div>
     )
 }
