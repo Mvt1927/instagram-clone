@@ -10,10 +10,10 @@ import { FiMoreHorizontal } from 'react-icons/fi'
 import { Modal } from '@material-ui/core'
 
 
-const Post = ({ username, user, caption, imageUrl, postId }) => {
+const Post = ({ username, user, caption, imageUrl, postId, timestamp }) => {
     const [comments, setComments] = useState([])
     const [like, setLike] = useState(12500)
-    const [sumComment, setSumComment] = useState(30)
+    const [sumComment, setSumComment] = useState(0)
     const [open, setOpen] = useState(false)
 
     function numberWithCommas(like) {
@@ -29,7 +29,7 @@ const Post = ({ username, user, caption, imageUrl, postId }) => {
                 .collection('comments')
                 .orderBy('timestamp', 'desc')
                 .onSnapshot((snapshot) => {
-                    setComments(snapshot.docs.map((doc) => (doc.data())))
+                    setComments(snapshot.docs.map((doc) => ({ id: doc.id, comment: doc.data() })))
                 })
         }
         return () => {
@@ -95,16 +95,19 @@ const Post = ({ username, user, caption, imageUrl, postId }) => {
                         comments={comments}
                     />
                 </Modal>
-                {comments.map((comment, i) => {
+                {comments.map(({ id, comment }, i) => {
                     if (i < 2) {
                         return (
-                            <div className="space-x-2" key={i}>
+                            <div className="space-x-2" key={id}>
                                 <strong>{comment.username}</strong>
                                 <span> {comment.text}</span>
                             </div>
                         )
                     }
                 })}
+                <p className="text-[10px] text-gray-500 mt-2">{
+
+                } GIỜ TRƯỚC</p>
             </div>
 
             <Comment

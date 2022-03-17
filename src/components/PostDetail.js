@@ -77,8 +77,8 @@ const PostDetail = ({ imageUrl, username, caption, comments, like, user, postId 
                                     <strong>{username}</strong><span>{caption}</span>
                                 </div>
                             </div>
-                            {comments.map((comment, i) => (
-                                <CommentList comment={comment} key={i} />
+                            {comments.map(({ id, comment }) => (
+                                <CommentList comment={comment} postId={postId} commentId={id} key={id} />
                             ))}
                         </div>
                     </div>

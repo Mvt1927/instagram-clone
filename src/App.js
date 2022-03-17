@@ -13,7 +13,6 @@ function App() {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             if (authUser) {
-                console.log(authUser);
                 setUser(authUser);
                 if (authUser.displayName) {
                 } else {
@@ -27,7 +26,6 @@ function App() {
             unsubscribe();
         };
     }, [user, username]);
-
     useEffect(() => {
         db.collection("posts").onSnapshot((snapshot) => {
             setPosts(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
@@ -46,6 +44,7 @@ function App() {
                         username={post.username}
                         imageUrl={post.imageUrl}
                         caption={post.caption}
+                        timestamp={JSON.stringify(post.timestamp)}
                     />
                 ))}
             </div>

@@ -10,7 +10,7 @@ const firebaseApp = firebase.initializeApp({
     measurementId: "G-VKSY22B9TP"
 });
 
-const db = firebaseApp.firestore();
+const db = firebase.firestore(firebaseApp)
 const auth = firebase.auth();
 const storage = firebase.storage();
 
