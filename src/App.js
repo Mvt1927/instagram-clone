@@ -1,59 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Header from './components/Header'
+import Home from './components/Home'
+import Messenger from './components/Messenger'
+import Trending from './components/Trending'
+import Suggest from './components/Suggest'
 import './App.css';
-import Post from './components/Post'
-import ImageUpload from './components/ImageUpload';
-import Header from './components/Header';
-import { db, auth } from "./config/firebase";
+import './components/Style.css'
 
 function App() {
-    const [posts, setPosts] = useState([]);
-    const [user, setUser] = useState(null);
-    const [username, setUsername] = useState("");
-
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            if (authUser) {
-                setUser(authUser);
-                if (authUser.displayName) {
-                } else {
-                    return authUser.updateProfile({ displayName: username });
-                }
-            } else {
-                setUser(null);
-            }
-        });
-        return () => {
-            unsubscribe();
-        };
-    }, [user, username]);
-    useEffect(() => {
-        db.collection("posts").onSnapshot((snapshot) => {
-            setPosts(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-        });
-    }, []);
-
     return (
-        <div className="bg-gray-100 h-full">
+        <div className="flex flex-col w-full h-screen overflow-hidden">
             <Header />
-            <div className="p-5 w-full flex flex-col justify-center items-center">
-                {posts.map(({ id, post }) => (
-                    <Post
-                        key={id}
-                        postId={id}
-                        user={user}
-                        username={post.username}
-                        imageUrl={post.imageUrl}
-                        caption={post.caption}
-                        timestamp={JSON.stringify(post.timestamp)}
-                    />
-                ))}
+            <div className="bg-[#fafafa] flex flex-col items-center">
+                <div className="flex flex-row lg:w-[935px] mt-5">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/messenger" element={<Messenger />} />
+                        <Route path="/trending" element={<Trending />} />
+                    </Routes>
+                    <Suggest />
+                </div>
             </div>
-
-            {user?.displayName ? (
-                <ImageUpload username={user.displayName} />
-            ) : (
-                <h3>Sorry you need to login to upload</h3>
-            )}
         </div>
     );
 }

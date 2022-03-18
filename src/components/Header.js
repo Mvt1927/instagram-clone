@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import Modal from '@material-ui/core/Modal'
+import { Link } from 'react-router-dom'
 import { Button, Input } from '@material-ui/core';
 import { auth } from '../config/firebase';
 import { makeStyles } from '@material-ui/core/styles'
+import { HiOutlineHome } from 'react-icons/hi'
+import { RiMessengerLine, RiMessengerFill } from 'react-icons/ri'
+import { BsPlusCircle, BsPlusCircleFill } from 'react-icons/bs'
+import { IoCompassOutline, IoCompassSharp } from 'react-icons/io5'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import ImageUpload from './ImageUpload'
 
 function getModalStyle() {
     const top = 50;
@@ -31,6 +38,7 @@ const Header = () => {
     const [modalStyle] = useState(getModalStyle)
     const [open, setOpen] = useState(false)
     const [openSignIn, setOpenSignIn] = useState('')
+    const [openUpload, setOpenUpload] = useState(false)
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -76,76 +84,9 @@ const Header = () => {
     }, [user, username]);
 
     return (
-        <div>
-            <Modal
-                open={open}
-                onClose={() => setOpen(false)}
-            >
-                <div style={modalStyle} className={classes.paper}>
-                    <form className="flex flex-col">
-                        <center>
-                            <img
-                                className=""
-                                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                                alt=""
-                            />
-                        </center>
-                        <Input
-                            placeholder="Username..."
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <Input
-                            placeholder="Email..."
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <Input
-                            placeholder="Password..."
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <Button type="submit" onClick={handleSignUp}>Sign up</Button>
-
-                    </form>
-                </div>
-            </Modal>
-
-            <Modal
-                open={openSignIn}
-                onClose={() => setOpenSignIn(false)}
-            >
-                <div style={modalStyle} className={classes.paper}>
-                    <form className="flex flex-col">
-                        <center>
-                            <img
-                                className=""
-                                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                                alt=""
-                            />
-                        </center>
-                        <Input
-                            placeholder="Email..."
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <Input
-                            placeholder="Password..."
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <Button type="submit" onClick={handleSignIn}>Sign In</Button>
-                    </form>
-                </div>
-            </Modal>
-
-            <div className="bg-white py-3 object-contain flex justify-center" style={{ border: "1px solid lightgray" }}>
-                <div className="lg:w-[650px] w-full flex justify-between">
+        <div className="flex justify-center bg-white border-b">
+            <div className="lg:w-[935px] flex flex-row items-center">
+                <div className="py-3 flex flex-1 justify-between">
                     <img
                         className="object-contain"
                         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
@@ -160,6 +101,102 @@ const Header = () => {
                         </div>
                     )}
                 </div>
+                <div className="lg:w-[325px] lg:flex hidden text-2xl space-x-5 flex justify-end">
+                    <Link to="/">
+                        <HiOutlineHome />
+                    </Link>
+                    <Link to="/messenger">
+                        <RiMessengerLine />
+                    </Link>
+                    <button
+                        onClick={() => setOpenUpload(true)}
+                    >
+                        <BsPlusCircle />
+                    </button>
+                    <Link to="/trending">
+                        <IoCompassOutline />
+                    </Link>
+
+
+                    <AiOutlineHeart />
+                </div>
+                <Modal
+                    open={open}
+                    onClose={() => setOpen(false)}
+                >
+                    <div style={modalStyle} className={classes.paper}>
+                        <form className="flex flex-col">
+                            <center>
+                                <img
+                                    className=""
+                                    src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                                    alt=""
+                                />
+                            </center>
+                            <Input
+                                placeholder="Username..."
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                            <Input
+                                placeholder="Email..."
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <Input
+                                placeholder="Password..."
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <Button type="submit" onClick={handleSignUp}>Sign up</Button>
+
+                        </form>
+                    </div>
+                </Modal>
+
+                <Modal
+                    open={openSignIn}
+                    onClose={() => setOpenSignIn(false)}
+                >
+                    <div style={modalStyle} className={classes.paper}>
+                        <form className="flex flex-col">
+                            <center>
+                                <img
+                                    className=""
+                                    src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                                    alt=""
+                                />
+                            </center>
+                            <Input
+                                placeholder="Email..."
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <Input
+                                placeholder="Password..."
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <Button type="submit" onClick={handleSignIn}>Sign In</Button>
+                        </form>
+                    </div>
+                </Modal>
+
+                <Modal
+                    open={openUpload}
+                    onClose={() => setOpenUpload(false)}
+                >
+                    {user?.displayName ? (
+                        <ImageUpload username={user.displayName} />
+                    ) : (
+                        <h3>Sorry you need to login to upload</h3>
+                    )}
+                </Modal>
             </div>
         </div>
     )

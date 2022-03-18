@@ -38,7 +38,7 @@ const Post = ({ username, user, caption, imageUrl, postId, timestamp }) => {
     }, [postId])
 
     return (
-        <div className="lg:w-[650px] w-full  bg-white border border-gray-200 mb-3">
+        <div className="w-full  bg-white border border-gray-200 mb-3">
             <div className="flex items-center py-2 px-3.5 justify-between">
                 <div className="flex items-center">
                     <Avatar
