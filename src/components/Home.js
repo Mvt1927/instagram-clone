@@ -32,19 +32,24 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="flex flex-col flex-1 items-center overflow-y-scroll h-screen hidden-scroll">
-            {posts.map(({ id, post }) => (
-                <Post
-                    key={id}
-                    postId={id}
-                    user={user}
-                    username={post.username}
-                    imageUrl={post.imageUrl}
-                    caption={post.caption}
-                    timestamp={JSON.stringify(post.timestamp)}
-                />
-            ))}
-        </div>
+        <>
+            <div className="flex flex-col flex-1 items-center overflow-y-scroll h-screen hidden-scroll">
+                {posts.map(({ id, post }) => (
+                    <Post
+                        key={id}
+                        postId={id}
+                        user={user}
+                        username={post.username}
+                        imageUrl={post.imageUrl}
+                        caption={post.caption}
+                        timestamp={JSON.stringify(post.timestamp)}
+                    />
+                ))}
+            </div>
+            <div className="lg:w-[325px] lg:flex hidden px-5">
+                <h1 className="text-red-500">Hello</h1>
+            </div>
+        </>
     )
 }
 

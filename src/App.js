@@ -4,7 +4,6 @@ import Header from './components/Header'
 import Home from './components/Home'
 import Messenger from './components/Messenger'
 import Trending from './components/Trending'
-import Suggest from './components/Suggest'
 import './App.css';
 import './components/Style.css'
 
@@ -13,13 +12,12 @@ function App() {
         <div className="flex flex-col w-full h-screen overflow-hidden">
             <Header />
             <div className="bg-[#fafafa] flex flex-col items-center">
-                <div className="flex flex-row lg:w-[935px] mt-5">
+                <div className="flex flex-row lg:w-[935px] my-5">
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/messenger" element={<Messenger />} />
                         <Route path="/trending" element={<Trending />} />
                     </Routes>
-                    <Suggest />
                 </div>
             </div>
         </div>
