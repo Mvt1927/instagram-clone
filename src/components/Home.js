@@ -40,9 +40,11 @@ const Home = () => {
                         postId={id}
                         user={user}
                         username={post.username}
-                        imageUrl={post.imageUrl}
+                        arrayImageUrl={post.arrayImageUrl}
                         caption={post.caption}
+                        amount={post.amount}
                         timestamp={JSON.stringify(post.timestamp)}
+
                     />
                 ))}
             </div>

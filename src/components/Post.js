@@ -8,9 +8,13 @@ import { IoChatboxOutline } from "react-icons/io5"
 import { BiBookmark } from 'react-icons/bi'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { Modal } from '@material-ui/core'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 
-
-const Post = ({ username, user, caption, imageUrl, postId, timestamp }) => {
+const Post = ({ username, user, caption, arrayImageUrl, postId, amount, timestamp }) => {
     const [comments, setComments] = useState([])
     const [like, setLike] = useState(12500)
     const [sumComment, setSumComment] = useState(0)
@@ -19,6 +23,7 @@ const Post = ({ username, user, caption, imageUrl, postId, timestamp }) => {
     function numberWithCommas(like) {
         return like.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
 
     useEffect(() => {
         let unSubscribe;
@@ -35,7 +40,8 @@ const Post = ({ username, user, caption, imageUrl, postId, timestamp }) => {
         return () => {
             unSubscribe()
         }
-    }, [postId])
+    }, [postId]);
+
 
     return (
         <div className="w-full  bg-white border border-gray-200 mb-3">
@@ -52,11 +58,25 @@ const Post = ({ username, user, caption, imageUrl, postId, timestamp }) => {
                     <FiMoreHorizontal />
                 </div>
             </div>
-            <img
-                className="w-full object-contain border-y border-gray-200"
-                src={imageUrl}
-                alt="postImage"
-            />
+            <Swiper
+                cssMode={true}
+                navigation={true}
+                pagination={true}
+                mousewheel={true}
+                keyboard={true}
+                modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+                className="w-full object-contain border-y border-gray-200 noselect"
+            >
+                {arrayImageUrl.map((URL) => (
+                    <SwiperSlide className='noselect'>
+                        <img
+                            className="w-full object-contain border-y border-gray-200 noselect"
+                            src={URL}
+                            alt="postImage"
+                        />
+                    </SwiperSlide>
+                ))}
+            </Swiper>
             <div className="p-3.5 border-b">
                 <div className="flex justify-between mb-2">
                     <div className="flex space-x-2 text-2xl" >
@@ -86,7 +106,7 @@ const Post = ({ username, user, caption, imageUrl, postId, timestamp }) => {
                     onClose={() => setOpen(false)}
                 >
                     <PostDetail
-                        imageUrl={imageUrl}
+                        arrayImageUrl={arrayImageUrl}
                         username={username}
                         caption={caption}
                         like={like}

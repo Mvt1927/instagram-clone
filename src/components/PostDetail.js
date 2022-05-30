@@ -7,6 +7,11 @@ import { BiBookmark } from 'react-icons/bi'
 import './Style.css'
 import CommentList from './CommentList'
 import Comment from './Comment'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 
 function getModalStyle() {
     const top = 50;
@@ -36,7 +41,7 @@ function numberWithCommas(like) {
     return like.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const PostDetail = ({ imageUrl, username, caption, comments, like, user, postId }) => {
+const PostDetail = ({ arrayImageUrl, username, caption, comments, like, user, postId }) => {
     const classes = useStyles()
     const [modalStyle] = useState(getModalStyle)
 
@@ -44,11 +49,25 @@ const PostDetail = ({ imageUrl, username, caption, comments, like, user, postId 
         <div style={modalStyle} className={classes.paper}>
             <div className="flex flex-row items-center w-full h-full">
                 <div className="flex-[7] overflow-hidden ">
-                    <img
-                        className="w-full h-full object-cover border-y border-gray-200"
-                        src={imageUrl}
-                        alt="postImage"
-                    />
+                    <Swiper
+                        cssMode={true}
+                        navigation={true}
+                        pagination={true}
+                        mousewheel={true}
+                        keyboard={true}
+                        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+                        className="w-full h-full object-cover border-y border-gray-200 noselect"
+                    >
+                        {arrayImageUrl.map((URL) => (
+                            <SwiperSlide className='noselect'>
+                                <img
+                                    className="w-full h-full object-cover border-y border-gray-200 noselect"
+                                    src={URL}
+                                    alt="postImage"
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
                 <div className="flex-[5]  w-full h-full overflow-hidden flex flex-col">
                     <div className="flex items-center py-2 px-3.5 justify-between border-b">

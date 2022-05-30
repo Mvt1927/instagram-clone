@@ -1,17 +1,21 @@
 import firebase from 'firebase'
 
 const firebaseApp = firebase.initializeApp({
-    apiKey: "AIzaSyAgkXzG4887lZVdtjrcpuR2ztwauczK-ZA",
-    authDomain: "instagram-clone-c29a4.firebaseapp.com",
-    projectId: "instagram-clone-c29a4",
-    storageBucket: "instagram-clone-c29a4.appspot.com",
-    messagingSenderId: "569270760334",
-    appId: "1:569270760334:web:264e5ce5744ac3f6f32adf",
-    measurementId: "G-VKSY22B9TP"
+    apiKey: "AIzaSyCvSJOd3jo5kShV6ux68nNrB5eD-5phpPc",
+    authDomain: "instagram-b65dc.firebaseapp.com",
+    projectId: "instagram-b65dc",
+    storageBucket: "instagram-b65dc.appspot.com",
+    messagingSenderId: "1064746753374",
+    appId: "1:1064746753374:web:1542c0f211b1df4314c3cf",
+    measurementId: "G-7HNQRTGZ2S"
 });
 
 const db = firebase.firestore(firebaseApp)
 const auth = firebase.auth();
 const storage = firebase.storage();
 
-export { db, auth, storage };
+export {
+    db,
+    auth,
+    storage
+};
